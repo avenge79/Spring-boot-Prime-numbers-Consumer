@@ -7,7 +7,7 @@ services:
     networks:
       - consumer-producer
     environment:
-      CSV_FILE_FOLDER: /temp
+      CSV_FILE_FOLDER: /temp/consumer
 
 networks:
   consumer-producer: # Define the custom network
