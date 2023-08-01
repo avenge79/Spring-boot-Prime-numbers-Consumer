@@ -57,7 +57,7 @@ public class CSVWriterService implements com.rado.consumer.service.CSVWriterServ
             writer.append(appendString);
             writer.flush();
 
-            log.info("Random numbers written to CSV file successfully.");
+            log.info("Random numbers written to CSV file successfully to: {}", fullFilePath);
         } catch (Exception e) {
             log.error(errorWriting, e.getMessage());
         }
