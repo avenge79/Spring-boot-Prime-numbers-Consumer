@@ -1,6 +1,6 @@
 package com.rado.consumer.controller;
 
-import com.rado.consumer.service.implementation.CSVWriterServiceImpl;
+import com.rado.consumer.service.implementation.CSVWriterService;
 import com.rado.consumer.utils.FilterPrimeNumbers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ import static com.rado.consumer.controller.MappingConstants.REQUEST_MAPPING;
 @Slf4j
 @RequestMapping(REQUEST_MAPPING)
 public class ConsumerController {
-    private final CSVWriterServiceImpl csvWriterServiceImpl;
+    private final CSVWriterService csvWriterService;
 
     @Autowired
-    public ConsumerController(CSVWriterServiceImpl csvWriterServiceImpl) {
-        this.csvWriterServiceImpl = csvWriterServiceImpl;
+    public ConsumerController(CSVWriterService csvWriterService) {
+        this.csvWriterService = csvWriterService;
     }
 
 
@@ -37,7 +37,7 @@ public class ConsumerController {
 
         log.info("Received numbers: {}", numbers);
         log.info("Prime numbers: {}", primeNumbers);
-        csvWriterServiceImpl.writeRandomNumbersToCSV(primeNumbers);
+        csvWriterService.writeRandomNumbersToCSV(primeNumbers);
 
         return ResponseEntity.ok(primeNumbers);
     }

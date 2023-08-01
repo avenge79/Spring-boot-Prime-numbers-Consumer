@@ -1,6 +1,6 @@
 package com.rado.consumer.controller;
 
-import com.rado.consumer.service.implementation.CSVWriterServiceImpl;
+import com.rado.consumer.service.implementation.CSVWriterService;
 import com.rado.consumer.utils.FilterPrimeNumbers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,10 +16,10 @@ import static com.rado.consumer.controller.MappingConstants.SEND_TO_MAPPING;
 @Slf4j
 @Controller
 public class WebsocketController {
-    private final CSVWriterServiceImpl csvWriterServiceImpl;
+    private final CSVWriterService csvWriterService;
 
-    public WebsocketController(CSVWriterServiceImpl csvWriterServiceImpl) {
-        this.csvWriterServiceImpl = csvWriterServiceImpl;
+    public WebsocketController(CSVWriterService csvWriterService) {
+        this.csvWriterService = csvWriterService;
     }
 
     @MessageMapping(MESSAGE_MAPPING)
@@ -36,6 +36,6 @@ public class WebsocketController {
         log.info("Prime numbers: {}", primeNumbers);
 
         if (numbers != null && !numbers.isEmpty())
-            csvWriterServiceImpl.writeRandomNumbersToCSV(primeNumbers);
+            csvWriterService.writeRandomNumbersToCSV(primeNumbers);
     }
 }

@@ -1,7 +1,6 @@
 package com.rado.consumer.service.implementation;
 
 import com.rado.consumer.configuration.CSVConfiguration;
-import com.rado.consumer.service.CSVWriterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +16,12 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class CSVWriterServiceImpl implements CSVWriterService {
+public class CSVWriterService implements com.rado.consumer.service.CSVWriterService {
     private final CSVConfiguration csvConfiguration;
     String errorWriting = "Error writing random numbers to CSV file: {}";
 
     @Autowired
-    public CSVWriterServiceImpl(CSVConfiguration csvConfiguration) {
+    public CSVWriterService(CSVConfiguration csvConfiguration) {
         this.csvConfiguration = csvConfiguration;
     }
 
