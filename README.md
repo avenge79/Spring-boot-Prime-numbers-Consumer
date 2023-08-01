@@ -2,12 +2,12 @@
 Demo project of Microservices with Spring Boot - Consumer app. This app accepts random numbers from '**Producer**': https://github.com/avenge79/Spring-boot-Prime-numbers-Producer.git and filters prime numbers if any. Filtered numbers are saved to CSV file with default path '**/temp/consumer**' which can be configured.
 
 ## To run projects from command line, make sure you have Java 11 installed and maven. <br/>
-To build this app, first execute
+To build this app, first execute<br/>
 **mvn clean install**<br/>
 Then go to **'target'** folder and run the project with<br/>
 **java -jar consumer-app-1.0.0.jar**<br/>
 <br/>
-Some properties can be configurd inside '**application.yml**'.
+Some properties can be configurd inside '**application.yml**' from '**resources**' folder.
 
 ## Run with Docker:<br/>
 Make sure you have **Docker** installed. Build project with **Maven** as described above. First create a Docker network for both projects:<br/>
