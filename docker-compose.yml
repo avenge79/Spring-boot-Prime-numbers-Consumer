@@ -1,0 +1,14 @@
+version: "3"
+services:
+  consumer:
+    image: consumer-app
+    ports:
+      - "8081:8081"
+    networks:
+      - consumer-producer
+    environment:
+      CSV_FILE_FOLDER: /temp
+
+networks:
+  consumer-producer: # Define the custom network
+    external: true
