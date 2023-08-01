@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,20 +32,19 @@ public class CSVWriterServiceImpl implements CSVWriterService {
         }
 
         try {
-            Path fileName = Path.of(csvConfiguration.getFolder());
-            String fullFilePath = Paths.get(String.valueOf(fileName), csvConfiguration.getName()).toString();
-
-            // Create folder if it doesn't exist
-            Files.createDirectories(fileName);
-            boolean hasData = false;
-
-            writeCsvFile(randomNumbers, fullFilePath, hasData);
+            writeCsvFile(randomNumbers, csvConfiguration.getFolder(), csvConfiguration.getName());
         } catch (Exception e) {
             log.error(errorWriting, e.getMessage());
         }
     }
 
-    public void writeCsvFile(List<Integer> randomNumbers, String fullFilePath, boolean hasData) {
+    public void writeCsvFile(List<Integer> randomNumbers, String folderPath, String fileName) throws IOException {
+        Path filePath = Path.of(folderPath);
+        String fullFilePath = Paths.get(String.valueOf(filePath), fileName).toString();
+
+        // Create folder if it doesn't exist
+        Files.createDirectories(filePath);
+        boolean hasData = false;
         try (FileWriter writer = new FileWriter(fullFilePath, true)) {
             File file = new File(fullFilePath);
             if (file.exists() && file.isFile() && file.length() > 0) {
