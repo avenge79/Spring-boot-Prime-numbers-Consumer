@@ -1,6 +1,6 @@
 package com.rado.consumer.controller;
 
-import com.rado.consumer.service.implementation.CSVWriterService;
+import com.rado.consumer.service.CSVWriterService;
 import com.rado.consumer.utils.FilterPrimeNumbers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
