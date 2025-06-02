@@ -13,11 +13,12 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").setAllowedOrigins("*");
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS().setSupressCors(true);
+        registry.addEndpoint("/ws").setAllowedOrigins("*")
+                .withSockJS().setSuppressCors(true);
     }
 
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
+//    @Override
+//    public void configureClientInboundChannel(ChannelRegistration registration) {
         // Uncomment for debugging
 //        registration.interceptors(new ChannelInterceptor() {
 //            @Override
@@ -30,7 +31,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
 //                } else if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
 //                    System.out.println("Subscribe ");
 //                } else if (StompCommand.SEND.equals(accessor.getCommand())) {
-////                    System.out.println(message);
+//                   System.out.println(message);
 //                    System.out.println("Send message ");
 //                } else if (StompCommand.DISCONNECT.equals(accessor.getCommand())) {
 //                    System.out.println("Exit ");
@@ -38,5 +39,5 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
 //                return message;
 //            }
 //        });
-    }
+//    }
 }
