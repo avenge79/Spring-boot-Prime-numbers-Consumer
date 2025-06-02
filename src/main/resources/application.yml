@@ -6,3 +6,8 @@ csv:
   file:
     folder: /temp/consumer
     name: ConsumerPrimeRandomNumbers.csv
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    groups-enabled: true

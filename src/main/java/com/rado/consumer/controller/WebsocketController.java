@@ -1,38 +1,47 @@
 package com.rado.consumer.controller;
 
+import com.rado.consumer.model.NumberMessage;
 import com.rado.consumer.service.CSVWriterService;
-import com.rado.consumer.utils.FilterPrimeNumbers;
+import com.rado.consumer.service.FilterPrimeNumbersService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-import static com.rado.consumer.controller.MappingConstants.MESSAGE_MAPPING;
+import static com.rado.consumer.utils.MappingConstants.*;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
+@Tag(name = "WebSocket Controller", description = "Processes WebSocket messages about numbers")
 public class WebsocketController {
     private final CSVWriterService csvWriterService;
-
-    public WebsocketController(CSVWriterService csvWriterService) {
-        this.csvWriterService = csvWriterService;
-    }
+    private final FilterPrimeNumbersService filterPrimeNumbersService;
 
     @MessageMapping(MESSAGE_MAPPING)
-    public void receiveMessage(@Payload(required = false) List<Integer> numbers) {
-        log.info("Received WS message: {}", numbers);
-        List<Integer> primeNumbers = FilterPrimeNumbers.filterNumbers(numbers);
-
-        if (primeNumbers != null && primeNumbers.isEmpty()) {
-            log.info("No prime numbers in the list");
+    @Operation(summary = WEB_SOCKET_MESSAGE_SUMMARY,
+            description = WEB_SOCKET_MESSAGE_DESCRIPTION)
+    public void receiveMessage(@Payload NumberMessage message) {
+        if (message == null || CollectionUtils.isEmpty(message.getNumbers())) {
+            log.info("No numbers received");
+            return;
         }
 
-        log.info("Received numbers: {}", numbers);
-        log.info("Prime numbers: {}", primeNumbers);
+        log.info("Received WS message: {}", message.getNumbers());
+        List<Integer> primeNumbers = filterPrimeNumbersService.filterNumbers(message.getNumbers());
 
-        if (numbers != null && !numbers.isEmpty())
-            csvWriterService.writeRandomNumbersToCSV(primeNumbers);
+        if (CollectionUtils.isEmpty(primeNumbers)) {
+            log.info(NO_PRIME_NUMBERS_FOUND);
+            return;
+        }
+
+        log.info("Prime numbers: {}", primeNumbers);
+        csvWriterService.writeRandomNumbersToCSV(primeNumbers);
     }
 }

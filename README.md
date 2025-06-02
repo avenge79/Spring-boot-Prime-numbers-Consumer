@@ -9,6 +9,8 @@ Then go to **'target'** folder and run the project with<br/>
 <br/>
 Some properties can be configurd inside '**application.yml**' from '**resources**' folder.
 
+Swagger: http://localhost:8081/v1/swagger-ui/index.html
+
 ## Run with Docker:<br/>
 Make sure you have **Docker** installed. Build project with **Maven** as described above. First create a Docker network for both projects:<br/>
 **docker network create consumer-producer**<br/>

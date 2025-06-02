@@ -2,7 +2,7 @@ package com.rado.consumer;
 
 import org.junit.jupiter.api.Test;
 
-import static com.rado.consumer.utils.FilterPrimeNumbers.isPrime;
+import static com.rado.consumer.service.implementation.FilterPrimeNumbersServiceImpl.isPrime;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
