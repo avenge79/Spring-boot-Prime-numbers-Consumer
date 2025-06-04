@@ -1,5 +1,6 @@
 package com.rado.consumer.controller;
 
+import com.rado.consumer.model.NumberMessage;
 import com.rado.consumer.service.CSVWriterService;
 import com.rado.consumer.service.FilterPrimeNumbersService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
 
 import static com.rado.consumer.utils.MappingConstants.*;
@@ -31,18 +31,19 @@ public class ConsumerController {
     @PostMapping(CONTROLLER_POST_MAPPING)
     @Operation(summary = RANDOM_NUMBERS_MAPPING_SUMMARY,
             description = RANDOM_NUMBERS_MAPPING_DESCRIPTION)
-    public ResponseEntity<List<Integer>> receiveRandomNumbers(@RequestBody List<Integer> numbers) {
-        List<Integer> primeNumbers = filterPrimeNumbersService.filterNumbers(numbers);
+    public ResponseEntity<NumberMessage> receiveRandomNumbers(@RequestBody NumberMessage message) {
+        List<Integer> primeNumbers = filterPrimeNumbersService.filterNumbers(message.getNumbers());
+
+        NumberMessage responseMessage = new NumberMessage();
+        responseMessage.setNumbers(primeNumbers);
 
         if (CollectionUtils.isEmpty(primeNumbers)) {
             log.info(NO_PRIME_NUMBERS_FOUND);
-            return ResponseEntity.ok(Collections.emptyList());
         } else {
-            log.info("Received numbers: {}", numbers);
+            log.info("Received numbers: {}", message.getNumbers());
             log.info("Prime numbers: {}", primeNumbers);
             csvWriterService.writeRandomNumbersToCSV(primeNumbers);
-
-            return ResponseEntity.ok(primeNumbers);
         }
+        return ResponseEntity.ok(responseMessage);
     }
 }

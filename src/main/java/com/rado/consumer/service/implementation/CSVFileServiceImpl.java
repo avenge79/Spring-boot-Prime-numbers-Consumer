@@ -1,6 +1,8 @@
 package com.rado.consumer.service.implementation;
 
+import com.rado.consumer.configuration.CSVConfiguration;
 import com.rado.consumer.service.CSVFileService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,16 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CSVFileServiceImpl implements CSVFileService {
-    public void writeCsvFile(List<Integer> randomNumbers, String folderPath, String fileName) throws IOException, IOException {
-        Path filePath = Paths.get(folderPath);
+
+    private final CSVConfiguration configuration;
+
+    public void writeCsvFile(List<Integer> randomNumbers) throws IOException, IOException {
+        Path filePath = Paths.get(configuration.getFolder());
         Files.createDirectories(filePath);
 
-        Path fullFilePath = filePath.resolve(fileName);
+        Path fullFilePath = filePath.resolve(configuration.getName());
         boolean hasData = Files.exists(fullFilePath) && Files.size(fullFilePath) > 0;
 
         try (BufferedWriter writer = Files.newBufferedWriter(fullFilePath, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
