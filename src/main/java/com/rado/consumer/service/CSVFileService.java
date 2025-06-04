@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CSVFileService {
-    void writeCsvFile(List<Integer> randomNumbers, String folderPath, String fileName) throws IOException;
+    void writeCsvFile(List<Integer> randomNumbers) throws IOException;
 }
